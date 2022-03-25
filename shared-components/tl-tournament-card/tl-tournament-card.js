@@ -1,7 +1,9 @@
 import { LitElement, html, css } from 'lit';
 import '@material/mwc-button';
 
-import { LoggedUser } from './tl-logged-user.js';
+import { LoggedUser } from '../tl-logged-user.js';
+import '../tl-date-time-card/tl-date-time-card.js';
+import { tournamentCardStyles } from './tl-tournament-card-css.js';
 
 const tournaments = {
     9871203: {
@@ -12,9 +14,9 @@ const tournaments = {
         dateEnd: 1647867900000,
         dateStart: 1647838800000,
         updated: 1647682020000,
-        description: 'Tournament 3',
+        description: 'Tournament description 3',
         fee: 100,
-        name: 'T3',
+        name: 'Tournament name 3',
         prizeConfigurationType: 'FIXED_VALUE',
         prizeConfigurationDistribution: [
             { rank: 1, distribution: 50 },
@@ -23,6 +25,7 @@ const tournaments = {
             { rank: 4, distribution: 10 }
         ],
         registration: true,
+        img: '/assets/tournament-img.png'
     },
     9957603: {
         id: 9957603,
@@ -32,18 +35,61 @@ const tournaments = {
         dateEnd: 1647954300000,
         dateStart: 1647925200000,
         updated: 1647858720000,
-        description: 'Tournament 3',
+        description: 'Tournament description 3',
         fee: 100,
-        name: 'T3',
+        name: 'Tournament name 3',
         prizeConfigurationType: 'FIXED_VALUE',
         prizeConfigurationDistribution: [
-          { rank: 1, distribution: 50 },
-          { rank: 2, distribution: 25 },
-          { rank: 3, distribution: 15 },
-          { rank: 4, distribution: 10 }
+            { rank: 1, distribution: 50 },
+            { rank: 2, distribution: 25 },
+            { rank: 3, distribution: 15 },
+            { rank: 4, distribution: 10 }
         ],
-        registration: true
-      },
+        registration: true,
+        img: '/assets/tournament-img-2.png'
+    },
+    9957604: {
+        id: 9957604,
+        calculated: false,
+        currencyId: 52,
+        created: 1647858720000,
+        dateEnd: 1647954300000,
+        dateStart: 1647925200000,
+        updated: 1647858720000,
+        description: 'Tournament description 4',
+        fee: 100,
+        name: 'Tournament name 4',
+        prizeConfigurationType: 'FIXED_VALUE',
+        prizeConfigurationDistribution: [
+            { rank: 1, distribution: 50 },
+            { rank: 2, distribution: 25 },
+            { rank: 3, distribution: 15 },
+            { rank: 4, distribution: 10 }
+        ],
+        registration: true,
+        img: '/assets/tournament-img-3.png'
+    },
+    9957605: {
+        id: 9957605,
+        calculated: false,
+        currencyId: 52,
+        created: 1647858720000,
+        dateEnd: 1647954300000,
+        dateStart: 1647925200000,
+        updated: 1647858720000,
+        description: 'Tournament description 5',
+        fee: 100,
+        name: 'Tournament name 5',
+        prizeConfigurationType: 'FIXED_VALUE',
+        prizeConfigurationDistribution: [
+            { rank: 1, distribution: 50 },
+            { rank: 2, distribution: 25 },
+            { rank: 3, distribution: 15 },
+            { rank: 4, distribution: 10 }
+        ],
+        registration: true,
+        img: '/assets/tournament-img.png'
+    },
 }
 const currencies = {
     52: {
@@ -91,7 +137,7 @@ export class TournamentCard extends LitElement {
     };
 
     static get styles() {
-        return [
+        return [tournamentCardStyles,
             css`
                 :host {
                     /* Temporary style before the task is officially tackled */
@@ -100,6 +146,7 @@ export class TournamentCard extends LitElement {
 
                     align-items: center;
                     justify-content: center;
+                    position: relative;
                 }
                 h4 {
                     font-size: var(--header-4-font-size);
@@ -251,21 +298,31 @@ export class TournamentCard extends LitElement {
                 return html` <h4>loading</h4> `;
             case State.LOADED:
                 return html`
-                    <h4>Title: ${this.tournament.name}</h4>
-                    <!-- FIXME: change the value of the substring to match official given value -->
-                    <div class="paragraph-large">Short description: ${this.tournament.description.substring(0, 30)}</div>
-                    <!-- FIXME: show dates like a countdown -->
-                    <div class="paragraph-medium">Event dates: ${this._formatDates()}</div>
-                    <!-- FIXME: show real prize amount -->
-                    <!-- FIXME: use the localization API to generate the plural of the currency symbol -->
-                    <div class="paragraph-large">Prize money: ${this.tournament.fee}&nbsp;${this.tournament.currency.symbol}s</div>
-                    <mwc-button class="details-button button-label-large" label="Details" outlined @click="${(event) => this._handleDetailsButton(event)}"></mwc-button>
+                    <div class="image-wrapper">
+                        <tl-date-time-card id="date-time-card" icon = "/icons/date-icon.png" text="${this._formatDates()}"></tl-date-time-card>
+                        <img class="tournament-img" src=${this.tournament.img} alt="Tournament">
+                    </div>
+                    <div class="tournament-wrapper">
+                        <div class="tournament-details">
+                            <div class="tournament-head" >
+                                <h4>${this.tournament.name}</h4>
+                                <!-- FIXME: change the value of the substring to match official given value -->
+                                <div class="paragraph-large">${this.tournament.description.substring(0, 30)}</div>
+                            </div>
+                            <div class="prize-wrapper">
+                                <!-- FIXME: show real prize amount -->
+                                <!-- FIXME: use the localization API to generate the plural of the currency symbol -->
+                                <span class="paragraph-large">Prize money</span>
+                                <div><h5>${this.tournament.fee}&nbsp;${this.tournament.currency.symbol}s</h5></div>
+                            </div>
+                        </div>
+                        <mwc-button class="details-button button-label-large" label="Details" outlined @click="${(event) => this._handleDetailsButton(event)}"></mwc-button>
+                    </div>
                 `;
             case State.ERROR:
                 return html` <h4>error</h4> `;
         }
     }
-
     willUpdate() {
         if (this.entityId !== null && this._state === State.EMPTY) {
             this._fetchTournamentInformation(this.entityId);

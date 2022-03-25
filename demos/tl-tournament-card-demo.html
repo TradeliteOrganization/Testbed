@@ -1,61 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <link rel="preload" href="../icons/tradelite-icon.svg" as="image" type="image/svg+xml" />
+<head>
+    <link rel="preload" href="../icons/tradelite-icon.svg" as="image" type="image/svg+xml" />
 
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link rel="preconnect" href="https://ga.jspm.io" crossorigin />
-        <link rel="modulepreload" href="https://ga.jspm.io/npm:es-module-shims@1.4.3/dist/es-module-shims.js" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://ga.jspm.io" crossorigin />
+    <link rel="modulepreload" href="https://ga.jspm.io/npm:es-module-shims@1.4.3/dist/es-module-shims.js" />
 
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0 maximum-scale=1" />
-        <title>MOGALAND by Tradelite Solutions GmbH</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 maximum-scale=1" />
+    <title>MOGALAND by Tradelite Solutions GmbH</title>
+    <meta property="og:title" content="MogaLand by Tradelite Solutions GmbH" />
+    <meta name="description" content="..." />
+    <meta property="og:description" content="..." />
+    <meta property="og:image" content="./icons/tradelite-icon.svg" />
+    <link rel="icon" href="../favicon.ico" sizes="any" />
+    <link rel="icon" href="../icons/tradelite-icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="../icons/tradelite-icon-180.png" />
+    <link rel="manifest" href="../manifest.json" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="author" content="Erwan Derrien" />
 
-        <meta property="og:title" content="MogaLand by Tradelite Solutions GmbH" />
-        <meta name="description" content="..." />
-        <meta property="og:description" content="..." />
-        <meta property="og:image" content="./icons/tradelite-icon.svg" />
-        <link rel="icon" href="../favicon.ico" sizes="any" />
-        <link rel="icon" href="../icons/tradelite-icon.svg" type="image/svg+xml" />
-        <link rel="apple-touch-icon" href="../icons/tradelite-icon-180.png" />
-        <link rel="manifest" href="../manifest.json" />
-        <meta name="theme-color" content="#000000" />
-        <meta name="author" content="Erwan Derrien" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Smooch+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Material+Icons&display=block" rel="stylesheet" />
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
 
-        <link href="https://fonts.googleapis.com/css2?family=Smooch+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-        <link href="https://fonts.googleapis.com/css?family=Material+Icons&display=block" rel="stylesheet" />
-        <style>
-            *,
-            *::before,
-            *::after {
-                box-sizing: border-box;
-            }
+        * {
+            margin: 0;
+        }
 
-            * {
-                margin: 0;
-            }
+        html {
+            font-family: 'Smooch Sans', sans-serif;
+            font-style: normal;
+            font-size: 62.5%;
+        }
 
-            html {
-                font-family: 'Smooch Sans', sans-serif;
-                font-style: normal;
-                font-size: 62.5%;
-            }
+        body {
+            min-height: 100vh;
+            font-size: 1rem;
 
-            body {
-                min-height: 100vh;
-                font-size: 1rem;
+            /* font-size: 5rem; */
+        }
+    </style>
+    <link rel="stylesheet" href="../theme.css" />
 
-                /* font-size: 5rem; */
-            }
-        </style>
-        <link rel="stylesheet" href="../theme.css" />
-
-        <!--
+    <!--
         JSPM Generator Import Map
         Edit URL: https://generator.jspm.io/#ldA5DsIwEIVhFyBO40W2hCh9CQ7gZSwGvMmZhFBxdSgRBQrdK/6vefsdY4fnuRJShshscQQDXZblHrifiVq1SuijUDy46sZDJAP6ZLQR6qsOFwg339atfWqjJIQctwKClf4DrXPXO/du8IQr/IAZyWqhP5eMOCAQLjDJ+X1QFtfpBZvIyxYvAQ
         -->
-        <script type="importmap">
+    <script type="importmap">
             {
                 "imports": {
                     "@material/mwc-button": "https://ga.jspm.io/npm:@material/mwc-button@0.26.0-canary.f3e28323.0/mwc-button.js",
@@ -126,52 +127,54 @@
             }
         </script>
 
-        <script async src="https://ga.jspm.io/npm:es-module-shims@0.12.8/dist/es-module-shims.min.js" crossorigin="anonymous"></script>
+    <script async src="https://ga.jspm.io/npm:es-module-shims@0.12.8/dist/es-module-shims.min.js"
+        crossorigin="anonymous"></script>
 
-        <style>
-            body {
-                position: fixed;
-                height: 100vh;
-                width: 100vw;
-                background-color: white;
-
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                z-index: 10;
-            }
-
-            #card-holder {
-                display: grid;
-                grid-gap: 2rem;
-                grid-template-columns: repeat(3, auto);
-            }
-
-            #card-holder > * {
-                height: 30rem;
-                width: 40rem;
-
-                color: white;
-                background-color: #1b0343;
-                border-radius: 2.8rem;
-            }
-        </style>
-    </head>
-
-    <body>
-        <tl-logged-user></tl-logged-user>
-        <div id="card-holder"></div>
-    </body>
-
-    <script type="module" async>
-        import { TournamentCard } from '../shared-components/tl-tournament-card.js';
-
-        const tournamentIds = [9871203, 9957603];
-        const placeholder = document.getElementById('card-holder');
-        for(const id of tournamentIds) {
-            const component = document.createElement('tl-tournament-card');
-            component.entityId = id;
-            placeholder.append(component);
+    <style>
+        body {
+            width: 100vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
         }
-    </script>
+
+        #card-holder {
+            width: 87%;
+            place-content: center;
+            display: grid;
+            grid-gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(18em, 40em));
+        }
+
+        #card-holder>* {
+            min-height: 33.3rem;
+            color: white;
+        }
+
+        @media all and (max-width: 400px) {
+            #card-holder>* {
+                min-height: 12.2em;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <tl-logged-user></tl-logged-user>
+    <div id="card-holder"></div>
+</body>
+
+<script type="module" async>
+    import { TournamentCard } from '../shared-components/tl-tournament-card/tl-tournament-card.js';
+
+    const tournamentIds = [9871203, 9957603, 9957604, 9957605 ];
+    const placeholder = document.getElementById('card-holder');
+    for (const id of tournamentIds) {
+        const component = document.createElement('tl-tournament-card');
+        component.entityId = id;
+        placeholder.append(component);
+    }
+</script>
+
 </html>
