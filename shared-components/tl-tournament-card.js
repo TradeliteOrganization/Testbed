@@ -1,7 +1,8 @@
-import { LitElement, html, css } from 'lit';
-import '@material/mwc-button';
+import { LitElement, html, css} from "lit";
+import "@material/mwc-button";
 
-import { LoggedUser } from './tl-logged-user.js';
+import { LoggedUser } from "./tl-logged-user.js";
+import "../shared-components/tl-tournament-countdown.js";
 
 const tournaments = {
     9871203: {
@@ -9,85 +10,93 @@ const tournaments = {
         calculated: true,
         currencyId: 52,
         created: 1647682020000,
-        dateEnd: 1647867900000,
-        dateStart: 1647838800000,
+        dateEnd: 1648217710000,
+        dateStart: 1648217401000,
         updated: 1647682020000,
-        description: 'Tournament 3',
+        description: "Tournament 3",
         fee: 100,
-        name: 'T3',
-        prizeConfigurationType: 'FIXED_VALUE',
+        name: "T3",
+        prizeConfigurationType: "FIXED_VALUE",
         prizeConfigurationDistribution: [
             { rank: 1, distribution: 50 },
             { rank: 2, distribution: 25 },
             { rank: 3, distribution: 15 },
-            { rank: 4, distribution: 10 }
+            { rank: 4, distribution: 10 },
         ],
         registration: true,
+        eventImage:
+            "https://images.unsplash.com/photo-1633545491399-54a16aa6a871?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2072&q=80",
     },
     9957603: {
         id: 9957603,
         calculated: false,
         currencyId: 52,
         created: 1647858720000,
-        dateEnd: 1647954300000,
-        dateStart: 1647925200000,
+        dateEnd: 1648380181000,
+        dateStart: 1648293781000,
         updated: 1647858720000,
-        description: 'Tournament 3',
+        description: "Tournament 3",
         fee: 100,
-        name: 'T3',
-        prizeConfigurationType: 'FIXED_VALUE',
+        name: "T3",
+        prizeConfigurationType: "FIXED_VALUE",
         prizeConfigurationDistribution: [
-          { rank: 1, distribution: 50 },
-          { rank: 2, distribution: 25 },
-          { rank: 3, distribution: 15 },
-          { rank: 4, distribution: 10 }
+            { rank: 1, distribution: 50 },
+            { rank: 2, distribution: 25 },
+            { rank: 3, distribution: 15 },
+            { rank: 4, distribution: 10 },
         ],
-        registration: true
-      },
-}
+        registration: true,
+        eventImage:
+            "https://images.unsplash.com/photo-1636036798069-195bd06f340c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=872&q=80",
+    },
+};
 const currencies = {
     52: {
         id: 52,
         tenantId: 1,
-        dateCreated: '2022-03-01T02:03:04.555555+01:00',
-        dateUpdated: '2022-03-01T02:03:04.555555+01:00',
-        name: 'In Game',
-        symbol: 'Coin',
-        description: 'In Game Currency',
+        dateCreated: "2022-03-01T02:03:04.555555+01:00",
+        dateUpdated: "2022-03-01T02:03:04.555555+01:00",
+        name: "In Game",
+        symbol: "Coin",
+        description: "In Game Currency",
         gameId: 1,
-        currencyType: 'IN_GAME_CURRENCY',
-        active: true
+        currencyType: "IN_GAME_CURRENCY",
+        active: true,
     },
-}
+};
 
 const State = {
-    EMPTY: 'emtpy',
-    LOADING: 'loading',
-    LOADED: 'loaded',
-    ERROR: 'error',
+    EMPTY: "emtpy",
+    LOADING: "loading",
+    LOADED: "loaded",
+    ERROR: "error",
 };
 
 export class TournamentCard extends LitElement {
     static properties = {
         entityId: {
-            type: 'string',
-            attribute: 'entity-id',
+            type: "string",
+            attribute: "entity-id",
             reflect: true,
         },
         _state: {
             state: true,
-            attribute: 'state',
-            type: 'string',
+            attribute: "state",
+            type: "string",
             reflect: false,
         },
         currency: {
-            type: 'Object',
+            type: "Object",
             reflect: false,
         },
         tournament: {
-            type: 'Object',
+            type: "Object",
             reflect: false,
         },
+        _currentCurrency: {
+            type: "string",
+            state: true,
+        }
     };
 
     static get styles() {
@@ -97,9 +106,15 @@ export class TournamentCard extends LitElement {
                     /* Temporary style before the task is officially tackled */
                     display: flex;
                     flex-direction: column;
-
-                    align-items: center;
+                    position: relative;
                     justify-content: center;
+                }
+                img {
+                    width: 97%;
+                    align-self: center;
+                    height: 18rem;
+                    border-radius: 2.8rem;
+                    box-shadow: 0 0 0.2rem 0.2rem #3e0697;
                 }
                 h4 {
                     font-size: var(--header-4-font-size);
@@ -125,6 +140,7 @@ export class TournamentCard extends LitElement {
 
                     --mdc-button-disabled-fill-color: #7644b5;
                     --mdc-button-disabled-outline-color: var(--mdc-theme-primary);
+                    --mdc-button-horizontal-padding: 28px;
 
                     filter: drop-shadow(0px 1px 23px #b973e0);
                     --mdc-theme-primary: null;
@@ -133,11 +149,41 @@ export class TournamentCard extends LitElement {
 
                 .button-label-large {
                     --mdc-typography-button-font-family: var(--font-family);
-                    --mdc-typography-button-font-size: var(--button-large-label-font-size);
-                    --mdc-typography-button-line-heightt: var(--button-large-label-line-height);
-                    --mdc-typography-button-font-weight: var(--button-large-label-font-weight);
+                    --mdc-typography-button-font-size: var(--button-large-font-size);
+                    --mdc-typography-button-line-height: var(--button-large-line-height);
+                    --mdc-typography-button-font-weight: var(--button-large-font-weight);
                     --mdc-typography-button-text-transform: none;
                     --mdc-typography-button-letter-spacing: none;
+                }
+
+                .event-title,
+                .event-text {
+                    margin: 0 2rem;
+                }
+
+                .event-title {
+                    margin-top: 1.2rem;
+                }
+
+                .event-prize {
+                    margin: 2rem 2rem 0;
+                }
+
+                .event-dates-label {
+                }
+
+                .event-prize-amount {
+                    background-color: #c078e4;
+                    padding: 0.2rem 1.8rem;
+                    margin-left: 1rem;
+                    border-radius: 2rem;
+                }
+
+                .details-button {
+                    position: absolute;
+                    align-self: flex-end;
+                    bottom: 10%;
+                    right: 5%;
                 }
             `,
         ];
@@ -148,13 +194,15 @@ export class TournamentCard extends LitElement {
         this.entityId = null;
         this._state = State.EMPTY;
         this.loggedUser = LoggedUser.getInstance();
+        this._currentCurrency = "";
     }
 
     _handleDetailsButton() {
-        console.log('redirect will be implmented here');
+        console.log("redirect will be implmented here");
+        // window.location.href = `/tournaments/${this.entityId}`;
         // TODO: implment page redirect, will most probably user an event to trigger the redirect
         // this.dispatchEvent(
-        //     new CustomEvent('tournament-details-button-clicked', {
+        //     new CustomEvent("tournament-details-button-clicked", {
         //         bubbles: true,
         //         composed: true,
         //         details: {
@@ -169,78 +217,53 @@ export class TournamentCard extends LitElement {
     async _fetchTournamentInformation(entityId) {
         this._state = State.LOADING;
 
-        // const getTournamentResponse = await fetch(`${env.baseUrl}${env.tournamentServicePath}/${entityId}`, {
-        //     method: 'GET',
-        //     mode: 'cors',
-        //     credentials: 'include',
-        //     headers: {
-        //         Accept: 'application/json',
-        //         Authorization: `Bearer ${LoggedUser.getInstance().getJWT()}`,
-        //         'Content-Type': 'application/json',
-        //     },
-        //     redirect: 'follow',
-        // });
-        // // Report error
-        // const status = getTournamentResponse.status;
-        // if (status !== 200) {
-        //     this._state = State.ERROR;
-        //     return;
-        // }
-        // // Extract the tournament infos
-        // this.tournament = await getTournamentResponse.json();
+        //fake request to get tournament data
+        this.tournament = await new Promise((resolve, reject) => {
+            setTimeout(() => resolve(tournaments[entityId]), Math.random() * 1000);
+        });
 
-        // const getCurrencyResponse = await fetch(`${env.baseUrl}${env.currencyServicePath}/${entityId}`, {
-        //     method: 'GET',
-        //     mode: 'cors',
-        //     credentials: 'include',
-        //     headers: {
-        //         Accept: 'application/json',
-        //         Authorization: `Bearer ${LoggedUser.getInstance().getJWT()}`,
-        //         'Content-Type': 'application/json',
-        //     },
-        //     redirect: 'follow',
-        // });
-        // // Report error
-        // const status = getCurrencyResponse.status;
-        // if (status !== 200) {
-        //     this._state = State.ERROR;
-        //     return;
-        // }
-        // // Extract the currency infos
-        // this.tournament.currency = await getCurrencyResponse.json();
-
-        // TODO: implment the fetch to get the tournament data from the api
-        this.tournament = tournaments[entityId];
-        this.tournament.currency = currencies[this.tournament.currencyId];
+        //fake request to get currency data
+        this.tournament.currency = await new Promise((resolve, reject) => {
+            setTimeout(() => resolve(currencies[this.tournament.currencyId]), Math.random() * 1000);
+        });
 
         this._state = State.LOADED;
 
         return this.tournament;
     }
 
-    _nth(d) {
-        if (d > 3 && d < 21) return 'th';
-        switch (d % 10) {
-            case 1:
-                return 'st';
-            case 2:
-                return 'nd';
-            case 3:
-                return 'rd';
-            default:
-                return 'th';
-        }
+    //request to ipgeo api to get user region currency
+    async _getUserCurrency() {
+        const response = await fetch(
+            "https://api.ipgeolocation.io/ipgeo?apiKey=c56ed09b75d4426486fc20d13a23779a"
+        );
+        const userInfo = await response.json();
+
+        return "USD" || userInfo.currency.code;
     }
 
-    _formatDates() {
-        const options = { month: 'short', day: 'numeric' };
+    async _convertCurrency() {
+        const baseCurrency = {
+            rate: 1,
+            code: "EUR",
+        };
 
-        var start = new Date(this.tournament.dateStart);
-        var end = new Date(this.tournament.dateEnd);
-        start = start.toLocaleDateString(undefined, options) + this._nth(start.getDate());
-        end = end.toLocaleDateString(undefined, options) + this._nth(end.getDate());
+        //i doesnt know real rate and base currency so i set EUR with rate 1:1
+        const convertedCoins = this.tournament.fee * baseCurrency.rate;
 
-        return start + ' - ' + end;
+        const baseCurrencyCode = baseCurrency.code;
+        const userCurrencyCode = await this._getUserCurrency();
+
+        //use exchangerate api to conversation Base currency to user region currency
+        const response = await fetch(
+            `https://api.exchangerate.host/convert?from=${baseCurrencyCode}&to=${userCurrencyCode}&amount=${convertedCoins}`
+        );
+        const info = await response.json();
+
+        this._currentCurrency = info.result.toLocaleString(undefined, {
+            style: "currency",
+            currency: userCurrencyCode,
+        });
     }
 
     render() {
@@ -251,26 +274,51 @@ export class TournamentCard extends LitElement {
                 return html` <h4>loading</h4> `;
             case State.LOADED:
                 return html`
-                    <h4>Title: ${this.tournament.name}</h4>
+                    <img src=${this.tournament.eventImage} />
+                    <h4 class="event-title">${this.tournament.name}</h4>
                     <!-- FIXME: change the value of the substring to match official given value -->
-                    <div class="paragraph-large">Short description: ${this.tournament.description.substring(0, 30)}</div>
-                    <!-- FIXME: show dates like a countdown -->
-                    <div class="paragraph-medium">Event dates: ${this._formatDates()}</div>
-                    <!-- FIXME: show real prize amount -->
-                    <!-- FIXME: use the localization API to generate the plural of the currency symbol -->
-                    <div class="paragraph-large">Prize money: ${this.tournament.fee}&nbsp;${this.tournament.currency.symbol}s</div>
-                    <mwc-button class="details-button button-label-large" label="Details" outlined @click="${(event) => this._handleDetailsButton(event)}"></mwc-button>
+                    <div class="paragraph-large event-text">
+                        ${this.tournament.description.substring(0, 30)}
+                    </div>
+                    <tl-tournament-countdown
+                        class="counter"
+                        date-start="${this.tournament.dateStart}"
+                        date-end="${this.tournament.dateEnd}"
+                    ></tl-tournament-countdown>
+                    <div class="paragraph-large event-prize">
+                        Prize money <span class="event-prize-amount">${this._currentCurrency}</span>
+                    </div>
+                    <mwc-button
+                        class="details-button button-label-large"
+                        label="Details"
+                        outlined
+                        @click="${(event) => this._handleDetailsButton(event)}"
+                    ></mwc-button>
                 `;
             case State.ERROR:
                 return html` <h4>error</h4> `;
         }
     }
 
-    willUpdate() {
+    async willUpdate() {
         if (this.entityId !== null && this._state === State.EMPTY) {
             this._fetchTournamentInformation(this.entityId);
+        }
+        if (this.tournament && !this._currentCurrency) {
+            this._convertCurrency();
+        }
+    }
+
+    //do this cause mwc-button has fixed height and issue still open https://github.com/material-components/material-web/issues/81
+   async updated(){
+        if(this.shadowRoot.querySelector("mwc-button")){
+            await this.shadowRoot.querySelector("mwc-button").updateComplete
+            
+            this.shadowRoot.querySelector("mwc-button")
+            .shadowRoot.querySelector(".mdc-button")
+            .style.height = "30px"
         }
     }
 }
 
-customElements.define('tl-tournament-card', TournamentCard);
+customElements.define("tl-tournament-card", TournamentCard);

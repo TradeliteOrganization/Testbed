@@ -128,6 +128,13 @@
     --button-large-label-font-weight: 700;
 
     --tl-dialog-overlay-background-color: rgba(27, 3, 67, 0.6);
+
+    /*  */
+
+    /* countdown variables */
+    --tl-tournament-countdown-border-radius: 1.8rem;
+    --tl-tournament-countdown-padding: 0 1rem;
+    --tl-tournament-countdown-box-shadow: 0 0 0 0.5rem #1b0343;
 }
 
 body {
