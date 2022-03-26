@@ -1,4 +1,4 @@
-import {tournaments} from "../mockData/tournaments.js";
+import { tournaments } from "../mockData/tournaments.js";
 
 export const getTournamentInfo = (entityId) =>
     new Promise((resolve, reject) => {
