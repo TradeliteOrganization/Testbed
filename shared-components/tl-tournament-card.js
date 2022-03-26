@@ -199,7 +199,7 @@ export class TournamentCard extends LitElement {
 
     _handleDetailsButton() {
         console.log("redirect will be implmented here");
-        // window.location.href = `/tournaments/${this.entityId}`;
+        window.location.href = `/tournaments/${this.entityId}`;
         // TODO: implment page redirect, will most probably user an event to trigger the redirect
         // this.dispatchEvent(
         //     new CustomEvent("tournament-details-button-clicked", {
@@ -239,7 +239,7 @@ export class TournamentCard extends LitElement {
         );
         const userInfo = await response.json();
 
-        return "USD" || userInfo.currency.code;
+        return userInfo.currency.code;
     }
 
     async _convertCurrency() {
