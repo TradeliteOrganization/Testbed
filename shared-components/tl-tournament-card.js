@@ -161,18 +161,16 @@ export class TournamentCard extends LitElement {
     async _fetchTournamentInformation(entityId) {
         this._state = State.LOADING;
 
-        //fake request to get tournament data
+        //request to get tournament data
         this.tournament = await getTournamentInfo(entityId);
 
-        //fake request to get currency data
+        //request to get currency data
         this.tournament.currency = await getCurrencyInfo(this.tournament.currencyId);
 
         this._state = State.LOADED;
 
         return this.tournament;
     }
-
-    //request to ipgeo api to get user region currency
 
     async _convertCurrency() {
         const baseCurrency = {
@@ -184,15 +182,18 @@ export class TournamentCard extends LitElement {
         const convertedCoins = this.tournament.fee * baseCurrency.rate;
 
         const baseCurrencyCode = baseCurrency.code;
+
+        //request to get userCurrencyCode
         const userCurrencyCode = await getUserCurrency();
 
-        //use exchangerate api to conversation Base currency to user region currency
+        //request to get converted Currency from base currency to user currency
         const convertedCurrency = await getConvertedCurrency(
             baseCurrencyCode,
             userCurrencyCode,
             convertedCoins
         );
 
+        //formating currency
         this._currentCurrency = convertedCurrency.toLocaleString(undefined, {
             style: "currency",
             currency: userCurrencyCode,
