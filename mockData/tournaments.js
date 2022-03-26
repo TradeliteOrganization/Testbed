@@ -1,0 +1,46 @@
+export const tournaments = {
+  9871203: {
+      id: 9871203,
+      calculated: true,
+      currencyId: 52,
+      created: 1647682020000,
+      dateEnd: 1648217710000,
+      dateStart: 1648217401000,
+      updated: 1647682020000,
+      description: "Tournament 3",
+      fee: 100,
+      name: "T3",
+      prizeConfigurationType: "FIXED_VALUE",
+      prizeConfigurationDistribution: [
+          { rank: 1, distribution: 50 },
+          { rank: 2, distribution: 25 },
+          { rank: 3, distribution: 15 },
+          { rank: 4, distribution: 10 },
+      ],
+      registration: true,
+      eventImage:
+          "https://images.unsplash.com/photo-1633545491399-54a16aa6a871?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2072&q=80",
+  },
+  9957603: {
+      id: 9957603,
+      calculated: false,
+      currencyId: 52,
+      created: 1647858720000,
+      dateEnd: 1648380181000,
+      dateStart: 1648293781000,
+      updated: 1647858720000,
+      description: "Tournament 3",
+      fee: 100,
+      name: "T3",
+      prizeConfigurationType: "FIXED_VALUE",
+      prizeConfigurationDistribution: [
+          { rank: 1, distribution: 50 },
+          { rank: 2, distribution: 25 },
+          { rank: 3, distribution: 15 },
+          { rank: 4, distribution: 10 },
+      ],
+      registration: true,
+      eventImage:
+          "https://images.unsplash.com/photo-1636036798069-195bd06f340c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=872&q=80",
+  },
+};

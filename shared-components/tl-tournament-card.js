@@ -1,69 +1,13 @@
-import { LitElement, html, css} from "lit";
+import { LitElement, html, css } from "lit";
 import "@material/mwc-button";
 
 import { LoggedUser } from "./tl-logged-user.js";
 import "../shared-components/tl-tournament-countdown.js";
 
-const tournaments = {
-    9871203: {
-        id: 9871203,
-        calculated: true,
-        currencyId: 52,
-        created: 1647682020000,
-        dateEnd: 1648217710000,
-        dateStart: 1648217401000,
-        updated: 1647682020000,
-        description: "Tournament 3",
-        fee: 100,
-        name: "T3",
-        prizeConfigurationType: "FIXED_VALUE",
-        prizeConfigurationDistribution: [
-            { rank: 1, distribution: 50 },
-            { rank: 2, distribution: 25 },
-            { rank: 3, distribution: 15 },
-            { rank: 4, distribution: 10 },
-        ],
-        registration: true,
-        eventImage:
-            "https://images.unsplash.com/photo-1633545491399-54a16aa6a871?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2072&q=80",
-    },
-    9957603: {
-        id: 9957603,
-        calculated: false,
-        currencyId: 52,
-        created: 1647858720000,
-        dateEnd: 1648380181000,
-        dateStart: 1648293781000,
-        updated: 1647858720000,
-        description: "Tournament 3",
-        fee: 100,
-        name: "T3",
-        prizeConfigurationType: "FIXED_VALUE",
-        prizeConfigurationDistribution: [
-            { rank: 1, distribution: 50 },
-            { rank: 2, distribution: 25 },
-            { rank: 3, distribution: 15 },
-            { rank: 4, distribution: 10 },
-        ],
-        registration: true,
-        eventImage:
-            "https://images.unsplash.com/photo-1636036798069-195bd06f340c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=872&q=80",
-    },
-};
-const currencies = {
-    52: {
-        id: 52,
-        tenantId: 1,
-        dateCreated: "2022-03-01T02:03:04.555555+01:00",
-        dateUpdated: "2022-03-01T02:03:04.555555+01:00",
-        name: "In Game",
-        symbol: "Coin",
-        description: "In Game Currency",
-        gameId: 1,
-        currencyType: "IN_GAME_CURRENCY",
-        active: true,
-    },
-};
+import { getTournamentInfo } from "../api/getTournamentInfo.js";
+import { getCurrencyInfo } from "../api/getCurrencyInfo.js";
+import { getUserCurrency } from "../api/getUserCurrencyInfo.js";
+import { getConvertedCurrency } from "../api/getConvertedCurrency.js";
 
 const State = {
     EMPTY: "emtpy",
@@ -96,7 +40,7 @@ export class TournamentCard extends LitElement {
         _currentCurrency: {
             type: "string",
             state: true,
-        }
+        },
     };
 
     static get styles() {
@@ -218,14 +162,10 @@ export class TournamentCard extends LitElement {
         this._state = State.LOADING;
 
         //fake request to get tournament data
-        this.tournament = await new Promise((resolve, reject) => {
-            setTimeout(() => resolve(tournaments[entityId]), Math.random() * 1000);
-        });
+        this.tournament = await getTournamentInfo(entityId);
 
         //fake request to get currency data
-        this.tournament.currency = await new Promise((resolve, reject) => {
-            setTimeout(() => resolve(currencies[this.tournament.currencyId]), Math.random() * 1000);
-        });
+        this.tournament.currency = await getCurrencyInfo(this.tournament.currencyId);
 
         this._state = State.LOADED;
 
@@ -233,14 +173,6 @@ export class TournamentCard extends LitElement {
     }
 
     //request to ipgeo api to get user region currency
-    async _getUserCurrency() {
-        const response = await fetch(
-            "https://api.ipgeolocation.io/ipgeo?apiKey=c56ed09b75d4426486fc20d13a23779a"
-        );
-        const userInfo = await response.json();
-
-        return userInfo.currency.code;
-    }
 
     async _convertCurrency() {
         const baseCurrency = {
@@ -252,15 +184,16 @@ export class TournamentCard extends LitElement {
         const convertedCoins = this.tournament.fee * baseCurrency.rate;
 
         const baseCurrencyCode = baseCurrency.code;
-        const userCurrencyCode = await this._getUserCurrency();
+        const userCurrencyCode = await getUserCurrency();
 
         //use exchangerate api to conversation Base currency to user region currency
-        const response = await fetch(
-            `https://api.exchangerate.host/convert?from=${baseCurrencyCode}&to=${userCurrencyCode}&amount=${convertedCoins}`
+        const convertedCurrency = await getConvertedCurrency(
+            baseCurrencyCode,
+            userCurrencyCode,
+            convertedCoins
         );
-        const info = await response.json();
 
-        this._currentCurrency = info.result.toLocaleString(undefined, {
+        this._currentCurrency = convertedCurrency.toLocaleString(undefined, {
             style: "currency",
             currency: userCurrencyCode,
         });
@@ -310,13 +243,13 @@ export class TournamentCard extends LitElement {
     }
 
     //do this cause mwc-button has fixed height and issue still open https://github.com/material-components/material-web/issues/81
-   async updated(){
-        if(this.shadowRoot.querySelector("mwc-button")){
-            await this.shadowRoot.querySelector("mwc-button").updateComplete
-            
-            this.shadowRoot.querySelector("mwc-button")
-            .shadowRoot.querySelector(".mdc-button")
-            .style.height = "30px"
+    async updated() {
+        if (this.shadowRoot.querySelector("mwc-button")) {
+            await this.shadowRoot.querySelector("mwc-button").updateComplete;
+
+            this.shadowRoot
+                .querySelector("mwc-button")
+                .shadowRoot.querySelector(".mdc-button").style.height = "30px";
         }
     }
 }
