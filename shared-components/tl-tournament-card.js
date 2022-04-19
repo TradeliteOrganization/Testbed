@@ -165,7 +165,6 @@ export class TournamentCard extends LitElement {
         this._state = State.LOADING;
 
         this.tournament = tournaments[entityId];
-        this.tournament.currency = currencies[this.tournament.currencyId];
 
         this._state = State.LOADED;
 
