@@ -1,0 +1,38 @@
+{
+    "id": "(trn)2022-04-15-techno-955159",
+    "title": "Technology market",
+    "description": "Identify the trends among the technology companies and submit your predictions",
+    "timeZone": "CET",
+    "registrationStart": "2022-04-09T07:00Z",
+    "registrationEnd": "2022-04-12T07:00Z",
+    "activityStart": "2022-04-09T07:00Z",
+    "activityEnd": "2022-04-15T18:00Z",
+    "ruleId": "mglnd-tournament-rule-2022-04-14",
+    "sponsorIds": [],
+    "assets": {
+        "heroImgCard": "https://cdn.mogaland.io/assets/data-related/tournament/2022-04-15-techno-955159-400x200.png"
+    },
+    "registrationFee": {
+        "value": 0,
+        "currencyId": "mglnd-coin"
+    },
+    "prizeDistribution": {
+        "type": "fixed",
+        "currencyId": "mglnd-gold",
+        "totalValue": 10,
+        "shareBetweenTies": true,
+        "distribution": [
+            2000, 1000, 500, 300, 200, 100, 100, 100, 100, 100, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 50, 50, 50, 50,
+            50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25,
+            25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25,
+            25, 25, 25, 25, 25, 25, 25, 25, 25, 25
+        ],
+        "spreadRest": false
+    },
+    "predictionEventIds": [
+        "(evt)2022-04-11-techno-352538",
+        "(evt)2022-04-12-techno-148459",
+        "(evt)2022-04-13-techno-168838",
+        "(evt)2022-04-14-techno-165904"
+    ]
+}

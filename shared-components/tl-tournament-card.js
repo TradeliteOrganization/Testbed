@@ -4,59 +4,60 @@ import '@material/mwc-button';
 import { LoggedUser } from './tl-logged-user.js';
 
 const tournaments = {
-    9871203: {
-        id: 9871203,
-        calculated: true,
-        currencyId: 52,
-        created: 1647682020000,
-        dateEnd: 1647867900000,
-        dateStart: 1647838800000,
-        updated: 1647682020000,
-        description: 'Tournament 3',
-        fee: 100,
-        name: 'T3',
-        prizeConfigurationType: 'FIXED_VALUE',
-        prizeConfigurationDistribution: [
-            { rank: 1, distribution: 50 },
-            { rank: 2, distribution: 25 },
-            { rank: 3, distribution: 15 },
-            { rank: 4, distribution: 10 }
-        ],
-        registration: true,
+    '(trn)2022-04-15-retail-636546': {
+        id: '(trn)2022-04-15-retail-636546',
+        title: 'Retail market',
+        description: 'Identify the trends among the retail companies and submit your predictions',
+        timeZone: 'CET',
+        registrationStart: '2022-04-09T07:00Z',
+        registrationEnd: '2022-04-12T07:00Z',
+        activityStart: '2022-04-09T07:00Z',
+        activityEnd: '2022-04-15T18:00Z',
+        prizeDistribution: {
+            type: 'fixed',
+            currencyId: 'mglnd-gold',
+            totalValue: 10,
+            shareBetweenTies: true,
+            distribution: [
+                2000, 1000, 500, 300, 200, 100, 100, 100, 100, 100, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 50, 50, 50, 50,
+                50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25,
+                25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25,
+                25, 25, 25, 25, 25, 25, 25, 25, 25, 25
+            ],
+            spreadRest: false
+        },
     },
-    9957603: {
-        id: 9957603,
-        calculated: false,
-        currencyId: 52,
-        created: 1647858720000,
-        dateEnd: 1647954300000,
-        dateStart: 1647925200000,
-        updated: 1647858720000,
-        description: 'Tournament 3',
-        fee: 100,
-        name: 'T3',
-        prizeConfigurationType: 'FIXED_VALUE',
-        prizeConfigurationDistribution: [
-          { rank: 1, distribution: 50 },
-          { rank: 2, distribution: 25 },
-          { rank: 3, distribution: 15 },
-          { rank: 4, distribution: 10 }
-        ],
-        registration: true
-      },
-}
-const currencies = {
-    52: {
-        id: 52,
-        tenantId: 1,
-        dateCreated: '2022-03-01T02:03:04.555555+01:00',
-        dateUpdated: '2022-03-01T02:03:04.555555+01:00',
-        name: 'In Game',
-        symbol: 'Coin',
-        description: 'In Game Currency',
-        gameId: 1,
-        currencyType: 'IN_GAME_CURRENCY',
-        active: true
+    '(trn)2022-04-15-techno-955159': {
+        id: '(trn)2022-04-15-techno-955159',
+        title: 'Technology market',
+        description: 'Identify the trends among the technology companies and submit your predictions',
+        timeZone: 'CET',
+        registrationStart: '2022-04-09T07:00Z',
+        registrationEnd: '2022-04-12T07:00Z',
+        activityStart: '2022-04-09T07:00Z',
+        activityEnd: '2022-04-15T18:00Z',
+        ruleId: 'mglnd-tournament-rule-2022-04-14',
+        sponsorIds: [],
+        assets: {
+            heroImgCard: 'https://cdn.mogaland.io/assets/data-related/tournament/2022-04-15-techno-955159-400x200.png'
+        },
+        registrationFee: {
+            value: 0,
+            currencyId: 'mglnd-coin'
+        },
+        prizeDistribution: {
+            type: 'fixed',
+            currencyId: 'mglnd-gold',
+            totalValue: 10,
+            shareBetweenTies: true,
+            distribution: [
+                2000, 1000, 500, 300, 200, 100, 100, 100, 100, 100, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 50, 50, 50, 50,
+                50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25,
+                25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25,
+                25, 25, 25, 25, 25, 25, 25, 25, 25, 25
+            ],
+            spreadRest: false
+        },
     },
 }
 
@@ -152,64 +153,17 @@ export class TournamentCard extends LitElement {
 
     _handleDetailsButton() {
         console.log('redirect will be implmented here');
-        // TODO: implment page redirect, will most probably user an event to trigger the redirect
-        // this.dispatchEvent(
-        //     new CustomEvent('tournament-details-button-clicked', {
-        //         bubbles: true,
-        //         composed: true,
-        //         details: {
-        //             detail: {
-        //                 tournament: this.tournament,
-        //             },
-        //         },
-        //     })
-        // );
+        //
+        // 3. To be update with a proposal to interact with a router that is listening
+        //
     }
 
     async _fetchTournamentInformation(entityId) {
+        //
+        // 2. To be replaced with live code
+        //
         this._state = State.LOADING;
 
-        // const getTournamentResponse = await fetch(`${env.baseUrl}${env.tournamentServicePath}/${entityId}`, {
-        //     method: 'GET',
-        //     mode: 'cors',
-        //     credentials: 'include',
-        //     headers: {
-        //         Accept: 'application/json',
-        //         Authorization: `Bearer ${LoggedUser.getInstance().getJWT()}`,
-        //         'Content-Type': 'application/json',
-        //     },
-        //     redirect: 'follow',
-        // });
-        // // Report error
-        // const status = getTournamentResponse.status;
-        // if (status !== 200) {
-        //     this._state = State.ERROR;
-        //     return;
-        // }
-        // // Extract the tournament infos
-        // this.tournament = await getTournamentResponse.json();
-
-        // const getCurrencyResponse = await fetch(`${env.baseUrl}${env.currencyServicePath}/${entityId}`, {
-        //     method: 'GET',
-        //     mode: 'cors',
-        //     credentials: 'include',
-        //     headers: {
-        //         Accept: 'application/json',
-        //         Authorization: `Bearer ${LoggedUser.getInstance().getJWT()}`,
-        //         'Content-Type': 'application/json',
-        //     },
-        //     redirect: 'follow',
-        // });
-        // // Report error
-        // const status = getCurrencyResponse.status;
-        // if (status !== 200) {
-        //     this._state = State.ERROR;
-        //     return;
-        // }
-        // // Extract the currency infos
-        // this.tournament.currency = await getCurrencyResponse.json();
-
-        // TODO: implment the fetch to get the tournament data from the api
         this.tournament = tournaments[entityId];
         this.tournament.currency = currencies[this.tournament.currencyId];
 
@@ -250,15 +204,14 @@ export class TournamentCard extends LitElement {
             case State.LOADING:
                 return html` <h4>loading</h4> `;
             case State.LOADED:
+                //
+                // 1. To be reorganized and styled
+                //
                 return html`
-                    <h4>Title: ${this.tournament.name}</h4>
-                    <!-- FIXME: change the value of the substring to match official given value -->
+                    <h4>Title: ${this.tournament.title}</h4>
                     <div class="paragraph-large">Short description: ${this.tournament.description.substring(0, 30)}</div>
-                    <!-- FIXME: show dates like a countdown -->
                     <div class="paragraph-medium">Event dates: ${this._formatDates()}</div>
-                    <!-- FIXME: show real prize amount -->
-                    <!-- FIXME: use the localization API to generate the plural of the currency symbol -->
-                    <div class="paragraph-large">Prize money: ${this.tournament.fee}&nbsp;${this.tournament.currency.symbol}s</div>
+                    <div class="paragraph-large">Prize: <img src="https://cdn.mogaland.io/assets/currency/mglnd-coin-x1.svg" height="25" width="25"> ${this.tournament.prizeDistribution.totalValue}</div>
                     <mwc-button class="details-button button-label-large" label="Details" outlined @click="${(event) => this._handleDetailsButton(event)}"></mwc-button>
                 `;
             case State.ERROR:
