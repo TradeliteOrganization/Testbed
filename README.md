@@ -85,3 +85,19 @@ you are with modern services.
 Thanks a lot for giving a try. Good luck ;)
 
 Regards, Dom
+
+## Answer about Description of the Tournament back-end service
+
+1. I highly recommend using socket services to implement the features. we can keep the up-to-date needs data and it will be updated on the client-side whatever its related data is changed.
+
+2. we can choose a very standard communication way between the server and client-side. I mean, if those data will not be needed to update often, we don't need to send the requests to get the latest data to the server by using API. Whenever the user visits this page, we can get the necessary data using API ( fetch or axios or something )
+
+3. we can make the perioded requests by the client-side to get the updated information but we need to make sure that it should be set up as well to let the server not down or very low performance.
+I don't recommend its way however we might choose it according to the specifications.
+
+I am a strong believer that any kind of web service and infrastructure must be depended on the specifications. There are lots of things to be considered between large-scale services and medium or small applications such as worth, cost vs profit, performance, maintenance, etc.
+
+Above, I noted 3 options for your questions. I think we have to combine option1 and option2 because some of them need to be kept up-to-date information while it runs but other things might not need it. I think to do it according to the spec and performance would be great.
+
+Thanks.
+Bryan.
