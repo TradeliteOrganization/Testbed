@@ -143,19 +143,17 @@ export class TournamentCard extends LitElement {
 
                 .in-game-money {
                 display: flex;
-                padding: 2px;
+                padding: 2px 10px 2px 30px;
                 border-radius: 255px;
                 //   background-color: var(--video-overlay-color);
                 background-color: #7843b0; // it can be defined in the theme.css file as a variable
-                }
-
-                .in-game-money > span {
-                padding: 0 1rem;
-                flex: 1;
-                text-align: center;
+                justify-content: center;
+                position: relative;
                 }
 
                 .in-game-money:before {
+                    position: absolute;
+                    left: 2px;
                 display: inline-block;
                 content: '';
                 width: 20px;
@@ -179,14 +177,11 @@ export class TournamentCard extends LitElement {
 
     _handleDetailsButton() {
         console.log('redirect will be implmented here');
-        // go to detail page
-        // window.location.href = "...";
-        // Or we can use Lit router module.
-        // this.navigation("....");
-
         //
         // 3. To be update with a proposal to interact with a router that is listening
         //
+        const event = new CustomEvent('tl-tournament-card-detail', { bubbies: true, composed: true, detail: this.tournament })
+        this.dispatchEvent(event);
     }
 
     async _fetchTournamentInformation(entityId) {
@@ -227,8 +222,8 @@ export class TournamentCard extends LitElement {
         var start = new Date(this.tournament.activityStart);
         var end = new Date(this.tournament.activityEnd);
         start =
-            start.toLocaleDateString(undefined, options) + this._nth(start.getDate());
-        end = end.toLocaleDateString(undefined, options) + this._nth(end.getDate());
+            start.toLocaleDateString('en-US', options) + this._nth(start.getDate());
+        end = end.toLocaleDateString('en-US', options) + this._nth(end.getDate());
 
         return start + ' - ' + end;
     }
@@ -262,7 +257,7 @@ export class TournamentCard extends LitElement {
                         <div class="paragraph-large card-price">
                             Prize money:
                             <span class="in-game-money">
-                            <span>${this.tournament.prizeDistribution.totalValue}</span>
+                                ${this.tournament.prizeDistribution.totalValue}
                             </span>
                         </div>
                         </div>
